@@ -1,0 +1,20 @@
+Options +FollowSymLinks
+
+Options -Indexes
+
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
+RewriteEngine on
+RewriteRule ^tai-lieu/(.*)/page/(.*)$ /post.php?db=tailieu&path=tai-lieu&cat=$1&page=$2
+RewriteRule ^giai-de/(.*)/page/(.*)$ /post.php?db=giaide&path=giai-de&cat=$1&page=$2
+RewriteRule ^danh-muc/(.*)/page/(.*)$ /post.php?db=postData&path=danh-muc&cat=$1&page=$2
+
+RewriteRule ^tai-lieu/(.*)/(.*)$ /post.php?db=tailieu&path=tai-lieu&cat=$1&title=$2
+RewriteRule ^giai-de/(.*)/(.*)$ /post.php?db=giaide&path=giai-de&cat=$1&title=$2
+RewriteRule ^danh-muc/(.*)/(.*)$ /post.php?db=postData&path=danh-muc&cat=$1&title=$2
+
+
+ErrorDocument /404 404/index
+
+php_value upload_max_filesize = 20M
+php_value post_max_size = 20M
