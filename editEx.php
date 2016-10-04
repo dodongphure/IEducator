@@ -6,7 +6,7 @@ if($user["role"]!=$_ADMIN_CODE){
 if(($_SERVER['REQUEST_METHOD'] == 'POST')&&!empty($_POST["grID"])){
 	$Ex = explode(".", $_POST["grID"])[0];
 	$exID = intval(explode(".", $_POST["grID"])[1]);
-	echo "<strong>Edit Exercise ".$Ex."</strong>";
+	echo "<strong>Edit Exercise ".convertEx($Ex)."</strong>";
 	switch ($Ex) {
 		case '1':
 		if($_GET["type"]=="edit"){
@@ -542,6 +542,7 @@ if(($_SERVER['REQUEST_METHOD'] == 'POST')&&!empty($_POST["grID"])){
 			    while($row = mysql_fetch_assoc($result)) {
 			        $title=$row["title"];
 			        $keywords = explode("*/*", $row["keywords"]);
+			        $answer = explode("*/*", $row["answer"]);
 			    } ?>
 			    <section id="create-course-section" class="create-course-section">        
 		            <div class="row">                 
@@ -577,6 +578,24 @@ if(($_SERVER['REQUEST_METHOD'] == 'POST')&&!empty($_POST["grID"])){
 		                                </div>
 		                            </div>
 		                        </div>
+
+		                        <div class="description create-item">
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <h4>Answers</h4>
+                                        </div>
+                                        <div class="col-md-9">
+                                            <div id="answer">
+                                            <?php
+                                            for($i=0; $i<count($answer); $i++){
+                                                echo "<div id=\"answer".$i."\"><input type=\"text\" class=\"form-control\" value=\"".$answer[$i]."\" name=\"ans[]\">";
+                                                echo "<a href=\"#action\" onclick=\"removeEleById('answer".$i."')\"><i class=\"icon md-close-2\"></i> Remove this answer</a></div>";
+                                            }?>
+                                            </div>
+                                            <a href="#action" onclick="addMoreAns()"><i class="icon md-plus"></i> Add more answers</a>
+                                        </div>
+                                    </div>
+                                </div>
 		                        
 		                        </form>
 		                       <div class="form-action">
@@ -594,10 +613,10 @@ if(($_SERVER['REQUEST_METHOD'] == 'POST')&&!empty($_POST["grID"])){
 			else {
 			    echo "0 exercises";
 			}
-		}else if(($_GET["type"]=="submit")&&!empty($_POST['keyword'])&&!empty($_POST['title'])){
+		}else if(($_GET["type"]=="submit")&&!empty($_POST['keyword'])&&!empty($_POST['ans'])&&!empty($_POST['title'])){
 			$keywordArr = implode("*/*", $_POST["keyword"]);
-
-			$sql="UPDATE ex6 SET title=\"".$_POST["title"]."\",keywords=\"".$keywordArr."\",timeCreated=\"".date("Y-m-d H:i:s",time())."\" WHERE id=".$exID;
+			$ansArr = implode("*/*", $_POST["ans"]);
+			$sql="UPDATE ex6 SET title=\"".$_POST["title"]."\",keywords=\"".$keywordArr."\",answer=\"".$ansArr."\",timeCreated=\"".date("Y-m-d H:i:s",time())."\" WHERE id=".$exID;
 			if($sql!=null){
 				if (mysql_query($sql, $conn))
 				    echo "<br>Update exercise successfully";

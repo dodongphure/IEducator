@@ -440,6 +440,20 @@ if(!empty($_GET['Ex'])){
                                 </div>
                             </div>
                         </div>
+
+                        <div class="description create-item">
+                            <div class="row">
+                                <div class="col-md-3">
+                                    <h4>Answers</h4>
+                                </div>
+                                <div class="col-md-9">
+                                    <div id="answer">
+									<input type="text" class="form-control" placeholder="Content of answer" name="ans[]">
+									</div>
+									<a href="#action" onclick="addMoreAns()"><i class="icon md-plus"></i> Add more answers</a>
+                                </div>
+                            </div>
+                        </div>
                       
                         </form>
                         <div class="form-action">
@@ -452,9 +466,10 @@ if(!empty($_GET['Ex'])){
         
     		</section>
 			<?php
-			if (($_SERVER['REQUEST_METHOD'] == 'POST')&&!empty($_POST['keyword'])&&!empty($_POST['title'])) {
+			if (($_SERVER['REQUEST_METHOD'] == 'POST')&&!empty($_POST['keyword'])&&!empty($_POST['ans'])&&!empty($_POST['title'])) {
 				$keywordArr = implode("*/*", $_POST["keyword"]);
-				$sql = "INSERT INTO ex6 (title, keywords, timeCreated) VALUES (\"".$_POST['title']."\", \"".$keywordArr."\", \"".date("Y-m-d H:i:s",time())."\")";
+				$answerArr = implode("*/*", $_POST["ans"]);
+				$sql = "INSERT INTO ex6 (title, keywords, answer, timeCreated) VALUES (\"".$_POST['title']."\", \"".$keywordArr."\", \"".$answerArr."\", \"".date("Y-m-d H:i:s",time())."\")";
 				if (mysql_query($sql, $conn)) {
 				    echo "Submit successfully<br>";
 				} else {

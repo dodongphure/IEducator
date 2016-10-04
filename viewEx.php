@@ -379,9 +379,10 @@ if(!empty($_GET['Ex'])){
                     <thead>
                         <tr>
                             <th width="5%" class="submissions">No.</th>
-                            <th width="25%" class="submissions">Title</th>
+                            <th width="20%" class="submissions">Title</th>
                             <th width="30%" class="author">Keywords<span class="caret"></span></th>
-                            <th width="20%" class="submit-date">Time Created<span class="caret"></span></th>
+                            <th width="30%">Answers<span class="caret"></span></th>
+                            <th width="15%" class="submit-date">Time Created<span class="caret"></span></th>
                             <th class="submit-date">Action<span class="caret"></span></th>
                         </tr>
                     </thead>
@@ -394,11 +395,14 @@ if(!empty($_GET['Ex'])){
                     $title = $row["title"];
                     $keywords = explode("*/*", $row["keywords"]);
                     $keywords = implode("<br>", $keywords);
+                    $answer = explode("*/*", $row["answer"]);
+                    $answer = implode("<br>", $answer);
                     ?>
                         <tr>
                             <td class="submissions"><?php echo $count ?></td>
                             <td class="submissions"><?php echo $title ?></td>
                             <td class="author"><?php echo $keywords ?></td>
+                            <td class="author"><?php echo $answer ?></td>
                             <td class="submit-date"><?php echo $row["timeCreated"] ?></td>
                             <td class="submit-date"><?php echo "<form id=\"formDelete".$id."\" method=\"post\">
                             <input type=\"hidden\" name=\"deleteRecord\" value=\"".$id."\">
