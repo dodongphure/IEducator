@@ -450,7 +450,7 @@ function confirmCheckResult(arg1, arg2){
 			showCancelButton: true,
 			confirmButtonColor: "#DD6B55",
 			confirmButtonText: "Yes, confirm it!",
-			closeOnConfirm: false
+			closeOnConfirm: true
 		},
 			function(){
 				checkResult(arg1, arg2);
